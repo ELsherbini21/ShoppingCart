@@ -1,0 +1,33 @@
+﻿@model CategoryViewModel
+
+@{
+    var dateTimeFormate = Model.CreatedDateTime.ToString("dd-MM-yyy / hh-mm tt");
+}
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col"> @Html.DisplayNameFor(item => item.Name)</th>
+            <th scope="col">@Html.DisplayNameFor(item => item.DisplayOrder)</th>
+            <th scope="col"> @Html.DisplayNameFor(item => item.CreatedDateTime)</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="table-active">
+            <td>@Html.DisplayFor(item=>item.Name)</td>
+            <td>@Html.DisplayFor(item=>item.DisplayOrder)</td>
+            <td> @dateTimeFormate</td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,31 @@
+﻿@model ApplicationUser
+
+@inject UserManager<ApplicationUser> _userManager
+@{
+
+    var FullName = $"{Model.FirstName} {Model.LastName} [{Model.Email}]";
+    SelectList AllUserList = new SelectList(_userManager.Users.ToList(), nameof(ApplicationUser.Id), nameof(ApplicationUser.UserName));
+
+}
+
+<style>
+
+
+
+
+   
+
+
+</style>
+<form asp-action="Index">
+
+    <div class="input-group w-50 mx-auto">
+        <select asp-for="Id" asp-items="AllUserList" class="form-select">
+
+            <option value="@null">-- Select User --</option>
+
+        </select>
+
+        <input type="submit" class="d-flex mx-aut btn btn-primary" value="Get User " />
+    </div>
+</form>

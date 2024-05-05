@@ -1,0 +1,126 @@
+﻿@model List<UsersOrdersHeaderViewModel>
+@inject UserManager<ApplicationUser> _userManager
+@{
+    ViewData["Title"] = "AddOrderToDetails";
+
+
+}
+
+<style>
+
+
+    #updateButtonDiv {
+        position: relative;
+        display: inline-block;
+        margin: 20px;
+    }
+
+        #updateButtonDiv button {
+            color: white;
+            font-family: Helvetica, sans-serif;
+            font-weight: bold;
+            font-size: 36px;
+            text-align: center;
+            text-decoration: none;
+            background-color: #FFA12B;
+            display: block;
+            position: relative;
+            padding: 20px 40px;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            text-shadow: 0px 1px 0px #000;
+            filter: drop-shadow(0px 1px #000);
+            -webkit-box-shadow: inset 0 1px 0 #FFE5C4, 0 10px 0 #915100;
+            -moz-box-shadow: inset 0 1px 0 #FFE5C4, 0 10px 0 #915100;
+            box-shadow: inset 0 1px 0 #FFE5C4, 0 10px 0 #915100;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+        }
+
+            #updateButtonDiv button:active {
+                top: 10px;
+                background-color: #F78900;
+                -webkit-box-shadow: inset 0 1px 0 #FFE5C4, inset 0 -3px 0 #915100;
+                -moz-box-shadow: inset 0 1px 0 #FFE5C4, inset 0 -3pxpx 0 #915100;
+                box-shadow: inset 0 1px 0 #FFE5C4, inset 0 -3px 0 #915100;
+            }
+
+        #updateButtonDiv:after {
+            content: "";
+            height: 100%;
+            width: 100%;
+            padding: 4px;
+            position: absolute;
+            bottom: -15px;
+            left: -4px;
+            z-index: -1;
+            background-color: #2B1800;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+        }
+</style>
+
+<div class="row container-fluid my-3">
+    <h1 class="text-dark text-center">
+        <span class="badge display-1 bg-primary " style="margin-top:20px;">  Manage Order State For All Users</span>
+    </h1>
+</div>
+
+<div>
+
+    <table class="table table-bordered table-striped table-hover text-center" style="width:900px;margin:auto;">
+        <thead>
+            <tr>
+
+                <th> Order Name</th>
+                <th> Order Status </th>
+                <th> Order Total </th>
+
+                <th> Manage Order </th>
+                <th> Order Details</th>
+
+            </tr>
+        </thead>
+
+        @for (var i = 0; i < Model.Count(); i++)
+        {
+            var item = Model[i];
+
+            <tbody>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => item.OrderHeaderName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => item.OrderStatus)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => item.OrderTotal)
+                    </td>
+
+                    <td>
+                        <a asp-action="ManageOrder" asp-route-orderHeaderId="@item.OrderHeaderId" class="btn btn-outline-success ">
+                            Manage Order
+
+                        </a>
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-orderHeaderId="@item.OrderHeaderId" class="btn btn-outline-dark w-50 ">
+                            
+                            <i class="fa-solid fa-info" title="Order Details "></i>
+                        </a>
+                    </td>
+
+                </tr>
+            </tbody>
+        }
+    </table>
+
+
+
+</div>
+
+

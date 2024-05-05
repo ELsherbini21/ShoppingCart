@@ -1,0 +1,128 @@
+﻿@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    var appUser = await UserManager.GetUserAsync(User);
+}
+
+
+<nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+    <div class="container-fluid">
+        <a asp-controller="Home" asp-action="Index" class="navbar-brand">Home Page</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav me-auto">
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <li class="nav-item">
+                        <a asp-controller="Cart" asp-action="Index" class="nav-link ">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            Shopping Cart
+                        </a>
+                    </li>
+                }
+             
+
+
+                @if (SignInManager.IsSignedIn(User) && await UserManager.IsInRoleAsync(appUser, "Admin"))
+                {
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
+                        <div class="dropdown-menu">
+
+                            <a asp-controller="Category" asp-action="Index" class="nav-link dropdown-item">
+                                <i class="fa-solid fa-list"></i>
+                                Category
+                                <span class="visually-hidden">(current)</span>
+                            </a>
+
+                            <a asp-controller="Product" asp-action="Index" class="nav-link dropdown-item">
+                                <i class="fa-brands fa-product-hunt"></i>
+                                Product
+                                <span class="visually-hidden">(current)</span>
+                            </a>
+
+                            <div class="dropdown-divider"></div>
+
+
+
+                            <a asp-controller="OrderDetail" asp-action="Index" class="nav-link dropdown-item">
+                                <i class="fa-brands fa-product-hunt"></i>
+                                Order Management
+                                <span class="visually-hidden">(current)</span>
+                            </a>
+
+
+
+                            <a asp-controller="Role" asp-action="Index" class="nav-link dropdown-item">
+
+                                <i class="fa-solid fa-users"></i>
+                                Users Role Management
+                            </a>
+
+                        </div>
+                    </li>
+
+                }
+
+
+            </ul>
+
+            <form class="d-flex">
+                <input id="searchText" class="form-control me-sm-2" type="search" placeholder="Search">
+                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+            </form>
+
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
+
+
+                    <ul class="nav navbar-nav navbar-right m-auto">
+
+
+
+                        <li>
+                            <a class="ms-2 me-5" asp-controller="Account" asp-action="SignOut" title="Manage">
+                                <i class="fa fa-sign-out" aria-hidden="true" title="Sing Out "></i>
+
+
+                            </a>
+
+                        </li>
+
+                    </ul>
+                </form>
+            }
+
+            else
+            {
+
+                <ul class="nav navbar-nav navbar-right float-end  ms-auto">
+
+
+
+                    <li class="me-4 float-end">
+                        <a class="btn btn-primary" asp-controller="Account" asp-action="SignUp">
+
+                            <i class="fa-regular fa-registered" aria-hidden="true" title="Sign Up "></i>
+                        </a>
+                    </li>
+
+                    <li class="me-4">
+                        <a class="btn btn-primary float-end" asp-controller="Account" asp-action="SignIn">
+
+                            <i class="fa fa-sign-in" aria-hidden="true" title="Sign In"></i>
+
+                        </a>
+                    </li>
+
+                </ul>
+            }
+
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,46 @@
+﻿@model ProductViewModel
+
+
+
+<div class="container">
+    <h4>@Model.Name</h4>
+    <hr />
+
+    <dl class="row d-flex details-description">
+        <input type="hidden" asp-for="Name" />
+        <input type="hidden" asp-for="Description" />
+        <input type="hidden" asp-for="Price" />
+        <input type="hidden" asp-for="ImageUrl" />
+        <div class="row col-6">
+            <dt class="col-sm-4">@Html.DisplayNameFor(item => item.Name)</dt>
+            <dd class="col-sm-6">@Html.DisplayFor(item=>item.Name)</dd>
+
+            <dt class="col-sm-4">@Html.DisplayNameFor(item => item.Description)</dt>
+            <dd class="col-sm-6">@Html.DisplayFor(item=>item.Description)</dd>
+
+            <dt class="col-sm-4">@Html.DisplayNameFor(item => item.Price)</dt>
+            <dd class="col-sm-6">@Html.DisplayFor(item=>item.Price)</dd>
+
+        </div>
+
+        <div class="row col-6" >
+
+
+            <dd>
+                <img src="~/Files/Images/@Model.ImageUrl" class="img img-fluid " style="margin-top:50px;" />
+            </dd>
+        </div>
+
+
+    </dl>
+</div>
+
+
+
+
+
+
+
+
+
+

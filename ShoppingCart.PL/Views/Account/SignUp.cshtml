@@ -1,0 +1,62 @@
+﻿@model SignUpViewModel
+
+
+@{
+    ViewData["Title"] = "SignUp";
+    Layout = "_AuthLayout";
+}
+
+
+<div asp-validation-summary="All" class="text-danger">
+</div>
+
+
+<form asp-action="SignUp" method="post">
+
+    <span asp-validation-for="FirstName" class="text-danger" style="color:#bb2124;"></span>
+    <input asp-for="FirstName" class="text FName" placeholder="First Name" required="">
+
+    <span asp-validation-for="LastName" class="text-danger" style="color:#bb2124;"></span>
+    <input asp-for="LastName" class="text LName" placeholder="Last Name" required="">
+
+    <span asp-validation-for="UserName" class="text-danger" style="color:#bb2124;"></span>
+    <input asp-for="UserName" class="text UserName" placeholder="UserName" required="">
+
+    <span asp-validation-for="Email" class="text-danger" style="color:#bb2124;"></span>
+    <input asp-for="Email" class="text email" placeholder="Email" required="">
+
+    <span asp-validation-for="Password" class="text-danger" style="color:#bb2124;"></span>
+    <input asp-for="Password" class="text" placeholder="Password" required="">
+
+    <span asp-validation-for="ConfirmPassword" class="text-danger" style="color:#bb2124;"></span>
+    <input asp-for="ConfirmPassword" class="text w3lpass" placeholder="Confirm Password" required="">
+
+
+
+    <label asp-for="Address" class="text-info" style="color:yellow;"> Address Field Is not Required</label>
+    <span asp-validation-for="Address" class="text-danger" style="color:#bb2124;"></span>
+    <input asp-for="Address" class="text email" placeholder="Address">
+
+    <label asp-for="City" class="text-info" style="color:yellow;"> City Field Is not Required</label>
+    <span asp-validation-for="City" class="text-danger" style="color:#bb2124;"></span>
+    <input asp-for="City" class="text email" placeholder="City">
+
+    <label asp-for="Phone" class="text-info" style="color:yellow;"> <strong> Phone </strong> Field Is not Required</label>
+    <span asp-validation-for="Phone" class="text-danger" style="color:#bb2124;"></span>
+    <input asp-for="Phone" class="text email" placeholder="Phone" style="color:white;">
+
+    <div class="wthree-text">
+        <label class="anim">
+            <input asp-for="IsAgree" class="checkbox" required="">
+            <span>I Agree To The Terms & Conditions</span>
+        </label>
+        <div class="clear"> </div>
+    </div>
+    <input type="submit" value="SIGNUP">
+</form>
+<p> Have An Account ? <a asp-action="SignIn"> Login Now</a> </p>
+
+
+@section Scripts{
+    <Partial name="_ValidationScriptsPartial" />
+}

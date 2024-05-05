@@ -1,0 +1,320 @@
+﻿@model OrderViewModel
+
+@{
+    Layout = "_layout";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>PickUp Details</title>
+
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta name="description" content="A survey form used by a hotel to get the satisfaction level of visitors">
+
+    <meta name="author" content="Edward Mc Evoy 2019">
+
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+    <style>
+        .container {
+            margin-bottom: 5%;
+        }
+
+        #form-header {
+            margin-top: 5%;
+            text-align: center;
+        }
+
+        #form-tagline {
+            background: #ff6d00;
+            border-top-left-radius: 0.5rem;
+            border-bottom-left-radius: 0.5rem;
+            color: #ffffff;
+            margin-top: 5%;
+            padding: 4%;
+            text-align: left;
+        }
+
+            #form-tagline .fa {
+                margin-bottom: 15%;
+            }
+
+            #form-tagline h2 {
+                margin-bottom: 15%;
+            }
+
+        #form-content {
+            background: #f4f4f4;
+            border-top-right-radius: 0.5rem;
+            border-bottom-right-radius: 0.5rem;
+            margin-top: 5%;
+            padding: 3%;
+        }
+
+        .form-group {
+            margin-top: 5%;
+        }
+
+        .contact {
+            padding: 4%;
+            height: 400px;
+        }
+
+        .control-label {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        div .submit-button {
+            margin-top: 3%;
+            text-align: right;
+        }
+
+        .btnSubmit {
+            white-space: normal;
+            width: auto;
+            background: #ff6d00;
+            color: #ffffff;
+            font-weight: 600;
+            width: 25%;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- open container -->
+        <div class="row">
+            <!--  open row -->
+
+            <div id="form-header" class="col-12">
+                <h1 id="title">PickUp Details </h1>
+            </div>
+        </div> <!--  close row -->
+
+        <div class="row">
+            <!--  open row -->
+            <div id="form-tagline" class="col-md-7">
+                <div class="form-tagline text-center">
+                    <i class="fa-solid fa-credit-card fa-5x"></i>
+                    <h2 class="">@Model.OrderTotal.ToString("c")</h2>
+                </div>
+                <div class="row" style="background-color:#ff6d00;">
+
+                    <div class="card my-3 border-0" style="background-color:#ff6d00;">
+
+                        <div class="card-header py-3">
+                            <h4 class="text-center text-white"> <strong>@Model.OrderHeader.OrderStatus </strong></h4>
+
+                        </div>
+
+                        <div class="card-body" style="background-color:#ff6d00;">
+                            <ul class="list-group list-group-flush w-100" style="background-color:#ff6d00; ">
+                                @foreach (var item in Model.OrderDetails)
+                                {
+                                    <li class="list-group-item d-flex small justify-content-between align-content-center text-white w-100" style="background-color:#ff6d00; width:500px;">
+                                        <span class="me-1"> <strong>@item.Product.Name</strong></span>
+                                        <span>Count : @item.Count</span>
+                                        <span> @item.Price.ToString("c")</span>
+                                        <div class="text-end"> Total Price : @((item.Count * item.Price).ToString("c"))</div>
+                                    </li>
+                                }
+
+                            </ul>
+                        </div>
+                        <hr class="w-50 mx-auto bg-white text-white" />
+                        @if (Model.OrderHeader.OrderStatus == OrderStatusEnum.Approved.ToString())
+                        {
+                            <a asp-action="InProcess" class="btn btn-light btn-lg btn-block w-75 mx-auto mt-2"> Start Processing </a>
+                        }
+                        @if (Model.OrderHeader.OrderStatus == OrderStatusEnum.UnderProcessing.ToString())
+                        {
+                            <a asp-action="Shipped" class="btn btn-light btn-lg btn-block w-75 mx-auto mt-2"> Ship Order </a>
+
+                        }
+                        @if (Model.OrderHeader.OrderStatus != OrderStatusEnum.Refunded.ToString() && Model.OrderHeader.OrderStatus != OrderStatusEnum.Cancelled.ToString())
+                        {
+                            <a asp-action="CancelOrder" asp-route-OrderHeaderId="@Model.OrderHeaderId" class="btn btn-light btn-lg btn-block w-75 mx-auto mt-2"> Cancel Order </a>
+
+                        }
+                        @if (Model.OrderHeader.OrderStatus != OrderStatusEnum.Pending.ToString() && Model.OrderHeader.OrderStatus!=OrderStatusEnum.Cancelled.ToString())
+                        {
+                            <a asp-action="PayNow" class="btn btn-light btn-lg btn-block w-75 mx-auto mt-2"> Pay Now </a>
+
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div id="form-content" class="col-md-5">
+
+                <form asp-action="Summary" method="post">
+                    <input type="hidden" asp-for="OrderHeaderId" />
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <!-- Name -->
+                    <div class="row form-group">
+                        <div class="col-sm-3">
+                            <label asp-for="OrderHeader.Name" class="control-label"></label>
+                        </div>
+
+                        <div class="input-group col-sm-9">
+                            <br />
+                            <input asp-for="OrderHeader.Name" class="form-control" readonly>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <!-- Phone -->
+                    <div class="row form-group">
+                        <div class="col-sm-3">
+                            <label asp-for="@Model.OrderHeader.Phone" class="control-label"></label>
+                        </div>
+
+                        <div class="input-group col-sm-9">
+                            <br />
+                            <input asp-for="@Model.OrderHeader.Phone" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <!-- Address -->
+                    <div class="row form-group">
+                        <div class="col-sm-3">
+                            <label asp-for="@Model.OrderHeader.Address" class="control-label"></label>
+                        </div>
+
+                        <div class="input-group col-sm-9">
+                            <br />
+                            <input asp-for="@Model.OrderHeader.Address" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <!-- City -->
+                    <div class="row form-group">
+                        <div class="col-sm-3">
+                            <label asp-for="@Model.OrderHeader.City" class="control-label"></label>
+                        </div>
+
+                        <div class="input-group col-sm-9">
+                            <br />
+                            <input asp-for="@Model.OrderHeader.City" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <!-- DateOfPayment -->
+                    <div class="row form-group">
+                        <div class="col-sm-3">
+                            <label asp-for="@Model.OrderHeader.PostalCode" class="control-label"></label>
+                        </div>
+
+                        <div class="input-group col-sm-9">
+                            <br />
+                            <input asp-for="@Model.OrderHeader.PostalCode" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <!-- DueDate -->
+                    <div class="row form-group">
+                        <div class="col-sm-3">
+                            <label asp-for="@Model.OrderHeader.State" class="control-label"></label>
+                        </div>
+
+                        <div class="input-group col-sm-9">
+                            <span asp-validation-for="@Model.OrderHeader.State" class="text-danger"></span>
+                            <br />
+                            <input asp-for="@Model.OrderHeader.State" class="form-control" placeholder="Please Enter Your City">
+                        </div>
+                    </div>
+                    <hr>
+
+                    <!-- State -->
+                    <div class="row form-group">
+                        <div class="col-sm-3">
+                            <label asp-for="@Model.OrderHeader.ApplicationUser.Email" class="control-label"></label>
+                        </div>
+
+                        <div class="input-group col-sm-9">
+                            <br />
+                            <input asp-for="@Model.OrderHeader.ApplicationUser.Email" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <!-- Postal Code -->
+                    <div class="row form-group">
+                        <div class="col-sm-3">
+                            <label asp-for="@Model.OrderHeader.DateOfOrder" class="control-label"></label>
+                        </div>
+
+                        <div class="input-group col-sm-9">
+                            <br />
+                            <input asp-for="@Model.OrderHeader.DateOfOrder" class="form-control" readonly>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <!-- DueDate -->
+                    <div class="row form-group">
+                        <div class="col-sm-3">
+                            <label asp-for="@Model.OrderHeader.DateOfShipping" class="control-label"></label>
+                        </div>
+
+                        <div class="input-group col-sm-9">
+                            <br />
+                            <input asp-for="@Model.OrderHeader.DateOfShipping" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <div class="row form-group">
+                        <div class="col-sm-3">
+                            <label asp-for="@Model.OrderHeader.PaymentStatus" class="control-label"></label>
+                        </div>
+
+                        <div class="input-group col-sm-9">
+                            <br />
+                            <input asp-for="@Model.OrderHeader.PaymentStatus" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group row justify-content-between">
+
+                        <div class="col-5  submit-button">
+                            <a asp-controller="Cart" asp-action="DisplayShoppingCartList" class="btnSubmit btn border-0 btn-sm w-100 ">
+                                <i class="fa-solid fa-house"></i>
+                                Return To Shipping
+                            </a>
+                        </div>
+
+                        <div class="col-5  submit-button">
+
+                            <input class="btnSubmit btn border-0 btn-sm w-100" type="submit" value="Update Order " />
+                        </div>
+                    </div>
+
+                </form> <!-- close form -->
+
+            </div> <!-- close form content div -->
+        </div> <!-- close row -->
+    </div><!--  close container -->
+
+
+</body>
+</html>
+
+@section  scripts{
+    <Partial name="_ValidationScriptsPartial" />
+}

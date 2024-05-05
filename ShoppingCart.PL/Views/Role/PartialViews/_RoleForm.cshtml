@@ -1,0 +1,47 @@
+﻿@model RoleViewModel
+
+<style>
+    #create:hover {
+        background-color: #39447c !important;
+        color: #fafafa !important;
+    }
+</style>
+
+
+<button data-bs-toggle="modal" data-bs-target="#Create"
+        style="text-decoration:none;background:#48559c;font-size:18px;font-family:arial;cursor:pointer;color:#ffffff;padding:15px 30px;border-color:#000000;border-style:solid;border-radius:3px;border-width:1px">
+    Create New Role
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="Create" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Enter Role Name </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form asp-action="Create" method="post">
+                <div class="modal-body">
+
+                    <input asp-for="Name" class="form-control" placeholder="Role Name ... " />
+
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-primary" value="Create" />
+                    </div>
+                </div>
+            </form>
+
+
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+}

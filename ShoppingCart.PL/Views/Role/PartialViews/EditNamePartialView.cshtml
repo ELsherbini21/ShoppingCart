@@ -1,0 +1,25 @@
+﻿@model RoleViewModel
+@inject RoleManager<IdentityRole> _roleManager
+
+
+<form asp-action="EditName" asp-route-Id="@Model.Id" method="post">
+
+    <!-- Modal content-->
+
+
+    <div class="card my-3">
+        <div class="card-body my-3">
+            <div class="form-group">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control" />
+            </div>
+
+        </div>
+        <div class=" row justify-content-center align-content-between ">
+
+            <input type="submit" class="  col-5 btn btn-success my-3 ms-2 w-50" value="Update Role Name " />
+            <a asp-action="Index" class=" col-5 btn btn-info my-3 me-2 w-50">Cancel</a>
+        </div>
+    </div>
+
+</form>

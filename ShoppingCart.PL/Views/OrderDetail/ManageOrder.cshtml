@@ -1,0 +1,125 @@
+﻿@model OrderHeaderViewModel
+
+@using ShoppingCart.PL.Helpers.Enums
+@inject UserManager<ApplicationUser> _userManager
+
+@{
+    ViewData["Title"] = "AddOrderToDetails";
+
+}
+
+@{
+    var PaymentStatusEnumList = new List<string>();
+
+    var OrderStatusEnumList = new List<string>();
+
+    var orderStatusSelectList = new SelectList(OrderStatusEnumList);
+
+    var PaymentStatusSelectList = new SelectList(PaymentStatusEnumList);
+
+    foreach (var payment in Enum.GetNames(typeof(PaymentStatusEnum)))
+    {
+        PaymentStatusEnumList.Add(payment.ToString());
+    }
+
+    foreach (var order in Enum.GetNames(typeof(OrderStatusEnum)))
+    {
+        OrderStatusEnumList.Add(order.ToString());
+    }
+
+}
+
+<form asp-controller="Cart" asp-action="OrderSuccess" asp-route-id="@Model.Id" method="post">
+
+
+    <section class="h-100 bg-dark">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col">
+                    <div class="card card-registration my-4">
+                        <div class="row g-0">
+                          
+                            <div class="col-9">
+                                <div class="card-body p-md-5 text-black">
+                                    <h3 class="mb-5 text-uppercase">User Contract </h3>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <div data-mdb-input-init class="form-outline">
+                                                <input asp-for="ApplicationUser.FirstName" class="form-control form-control-lg" readonly />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <div data-mdb-input-init class="form-outline">
+                                                <input asp-for="ApplicationUser.LastName" class="form-control form-control-lg" readonly />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <div data-mdb-input-init class="form-outline">
+                                                <input asp-for="Address" class="form-control form-control-lg" readonly />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <div data-mdb-input-init class="form-outline">
+                                                <input asp-for="Phone" class="form-control form-control-lg" readonly />
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <div data-mdb-input-init class="form-outline">
+                                                <label class="form-check-label"> Order Status </label>
+                                                <select asp-for="OrderStatus" asp-items="orderStatusSelectList" class="form-select">
+
+                                                    <option value="@null">-- Select Order Status  --</option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <div data-mdb-input-init class="form-outline">
+                                                <label class="form-check-label"> Payment Status </label>
+                                                <select asp-for="PaymentStatus" asp-items="PaymentStatusSelectList" class="form-select">
+
+                                                    <option value="@null">-- Select Payment Status --</option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+
+
+
+
+                                    <div class="row pt-3 justify-content-between">
+                                        <div class="col-4 float-start">
+                                            <input type="submit" class="btn btn-success btn-lg" value="Submit Form" />
+                                        </div>
+                                        <div class="col-6 float justify-content-between">
+                                            <a asp-action="Index" class="btn btn-warning btn-lg mx-2">Return </a>
+                                            <a asp-action="@nameof(OrderDetailController.Delete)" asp-route-orderHeaderId="@Model.Id" class="btn btn-danger btn-lg mx-2">Delete  </a>
+                                        </div>
+                                       
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</form>

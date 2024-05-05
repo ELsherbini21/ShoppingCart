@@ -1,0 +1,82 @@
+﻿@model SignInViewModel
+
+
+@{
+    ViewData["Title"] = "Sign In";
+    Layout = "_AuthLayout";
+}
+
+<style>
+
+
+</style>
+<div asp-validation-summary="All" class="text-danger">
+</div>
+
+
+<form asp-action="SignIn" method="post">
+    <div asp-validation-summary="All"></div>
+
+    <input asp-for="Email" class="text FName" placeholder="Email" required="">
+    <span asp-validation-for="Email" class="text-danger" style="color:#d9534f;"></span>
+
+    <input type="password" asp-for="Password" class="text" placeholder="Password" required="">
+    <span asp-validation-for="Password" class="text-danger" style="color:#d9534f;"></span>
+
+    <div class="wthree-text " style="margin-top : 20px">
+        <label class="anim">
+            <input asp-for="RememberMe" class="checkbox">
+            <span> Remember Me</span>
+        </label>
+        <div class="clear"> </div>
+    </div>
+
+    <input type="submit" value="SIGN IN" />
+
+</form>
+
+<hr />
+@{
+    if (Model.ExternalLogins?.Count == 0)
+    {
+        <div>No external logins configured</div>
+    }
+    else
+    {
+        <form method="post" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl">
+            <div>
+                <partial name="GoogleLoginButton" />
+                <hr style=" visibility: hidden" />
+                <partial name="FacebookLoginButton" />
+
+            </div>
+        </form>
+    }
+}
+
+<hr style=" visibility: hidden" />
+
+
+
+
+<hr style=" visibility: hidden" />
+<p>
+    Don't Have An Account ?
+    <a asp-action="SignUp">
+        Register Now
+    </a>
+</p>
+
+<p style="margin-top:15px">
+    Forget Password ?
+    <a asp-action="ForgetPassword">
+        ForgetPassword
+    </a>
+</p>
+
+
+
+@section Scripts{
+    <Partial name="_ValidationScriptsPartial" />
+
+}

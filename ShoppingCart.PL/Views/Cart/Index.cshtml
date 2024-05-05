@@ -1,0 +1,105 @@
+﻿@model List<CartViewModel>
+@using ShoppingCart.PL.Controllers.Customer;
+@inject UserManager<ApplicationUser> _userManager
+@{
+    Layout = "_Layout";
+
+}
+@{
+    double TotalOrderPrice = 0;
+}
+
+<h1 class="text-center mt-2">
+    <span class="badge bg-info ">@_userManager.GetUserAsync(User).Result.FirstName @_userManager.GetUserAsync(User).Result.LastName</span>
+</h1>
+
+
+@* <form asp-action="Create" method="get"> *@
+<section style="background-color: #eee;">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            @for (var i = 0; i < Model.Count(); i++)
+            {
+                @*  <input asp-for="@Model[i].Id" type="hidden" />
+            <input asp-for="@Model[i].ProductId" type="hidden" />
+            <input asp-for="@Model[i].ApplicationUserId" type="hidden" />
+            <input asp-for="@Model[i].Count" type="hidden" />
+            <input asp-for="@Model[i].Product" type="hidden" />
+            <input asp-for="@Model[i].ApplicationUser" type="hidden" /> *@
+
+                var item = Model[i];
+
+
+
+                <div class="col-md-4 col-sm-6 col-xl-4">
+                    @{
+                        var totalPrice = item.Count * item.Product.Price;
+                        TotalOrderPrice += totalPrice;
+
+                    }
+
+
+                    <div class="card text-black my-2">
+                        <i class="fab fa-apple fa-lg pt-3 pb-1 px-3"></i>
+                        <img src="~/Files/Images/@item.Product.ImageUrl" style="height:200px;"
+                             class="card-img-top" alt="Apple Computer" />
+                        <div class="card-body">
+                            <div class="text-center">
+                                <h5 class="card-title">@item.Product.Name</h5>
+                                <p class="text-muted mb-4">@item.Product.Description</p>
+                            </div>
+                            <div>
+                                <div class="d-flex justify-content-between">
+                                    <span>price</span><span>@item.Product.Price.ToString("c")</span>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <span>Quantity</span><span>@item.Count</span>
+                                </div>
+
+                            </div>
+
+                            <div class="d-flex justify-content-between total font-weight-bold mt-4" style="font-size:20px;">
+                                <span>Total</span><span class="badge bg-primary">
+
+                                    @totalPrice.ToString("C")
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center align-items-center">
+
+                            <div class="col-7 text-center">
+                                <a asp-action="EditOrder" asp-route-id="@item.Id" class="btn btn-outline-info mt-2 mb-3 w-75 font-weight-bold"> Edit </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+            <input name="orderTotal" type="hidden" value="@TotalOrderPrice" />
+
+        </div>
+
+
+        <div class="d-flex justify-content-between w-50 mx-auto mt-3">
+
+            @* <h1 class="font-weight-bold" style="font-size:20px;"> Total Order Price : </h1> *@
+        </div>
+    </div>
+</section>
+<div class="d-flex justify-content-between w-50 mx-auto mt-3">
+
+    <h1 class="font-weight-bold" style="font-size:20px;"> Total Order Price : </h1>
+    <h1 class="badge bg-info" style="font-size:20px;"> @TotalOrderPrice.ToString("c") </h1>
+</div>
+
+<div class="d-flex w-50 mx-auto mt-3 float-start">
+
+    @if (Model.Count() > 0)
+    {
+        <a asp-action="@nameof(CartController.Summary)" class="btn btn-success btn-lg font-weight-bold"> Processed to pay </a>
+    }
+
+    @* <input type="submit" class="btn btn-success btn-lg font-weight-bold" value="processed to pay" /> *@
+</div>
+
+@* </form> *@

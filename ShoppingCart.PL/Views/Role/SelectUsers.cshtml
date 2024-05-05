@@ -1,0 +1,119 @@
+﻿@model List<UsersInRoleViewModel>
+@inject UserManager<ApplicationUser> _userManager
+@{
+    ViewData["Title"] = "AddOrRemoverUsersFrom";
+
+    var roleInfo = (IdentityRole)ViewBag.roleObjectInfo;
+}
+
+<style>
+
+
+    #updateButtonDiv {
+        position: relative;
+        display: inline-block;
+        margin: 20px;
+    }
+
+        #updateButtonDiv button {
+            color: white;
+            font-family: Helvetica, sans-serif;
+            font-weight: bold;
+            font-size: 36px;
+            text-align: center;
+            text-decoration: none;
+            background-color: #FFA12B;
+            display: block;
+            position: relative;
+            padding: 20px 40px;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            text-shadow: 0px 1px 0px #000;
+            filter: drop-shadow(0px 1px #000);
+            -webkit-box-shadow: inset 0 1px 0 #FFE5C4, 0 10px 0 #915100;
+            -moz-box-shadow: inset 0 1px 0 #FFE5C4, 0 10px 0 #915100;
+            box-shadow: inset 0 1px 0 #FFE5C4, 0 10px 0 #915100;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+        }
+
+            #updateButtonDiv button:active {
+                top: 10px;
+                background-color: #F78900;
+                -webkit-box-shadow: inset 0 1px 0 #FFE5C4, inset 0 -3px 0 #915100;
+                -moz-box-shadow: inset 0 1px 0 #FFE5C4, inset 0 -3pxpx 0 #915100;
+                box-shadow: inset 0 1px 0 #FFE5C4, inset 0 -3px 0 #915100;
+            }
+
+        #updateButtonDiv:after {
+            content: "";
+            height: 100%;
+            width: 100%;
+            padding: 4px;
+            position: absolute;
+            bottom: -15px;
+            left: -4px;
+            z-index: -1;
+            background-color: #2B1800;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+        }
+</style>
+
+<div class="row container-fluid my-3">
+    <h1 class="text-dark text-center">
+        Select Users For Role
+        <br />
+        <span class="badge display-1 bg-primary " style="margin-top:20px;"> @roleInfo.Name</span>
+    </h1>
+</div>
+
+<form asp-action="SelectUsers" asp-route-roleId="@roleInfo.Id" method="post">
+    <div>
+
+        <table class="table table-bordered table-striped table-hover text-center" style="width:900px;margin:auto;">
+            <thead>
+                <tr>
+
+                    <th> Full Name</th>
+                    <th> User Name </th>
+                    <th> Email </th>
+                    <th> Actions</th>
+                </tr>
+            </thead>
+
+            @for (var i = 0; i < Model.Count(); i++)
+            {
+                <tbody>
+                    <tr>
+                        <Input type="hidden" asp-for="@Model[i].AppUserId">
+
+                        <td>
+                            @Model[i].FirstName @Model[i].LastName
+                        </td>
+
+                        <td>
+                            @Model[i].UserName
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => Model[i].Email)
+                        </td>
+
+                        <td>
+                            <input asp-for="@Model[i].IsSelected" class="form-check-input" />
+                        </td>
+                    </tr>
+                </tbody>
+            }
+        </table>
+
+
+        <div id="updateButtonDiv" class="row my-3">
+            <button type="submit"> Update</button>
+        </div>
+    </div>
+
+</form>
+

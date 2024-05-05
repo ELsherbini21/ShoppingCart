@@ -1,0 +1,32 @@
+﻿@model CategoryViewModel
+
+
+
+
+<div class="col-md-12 mt-3">
+    <label asp-for="Name" class="form-label"></label>
+    <input asp-for="Name" class="form-control" placeholder="Enter Name" required>
+    <span asp-validation-for="Name" class="text-danger"></span>
+</div>
+
+<div class="col-md-12 mt-3">
+    <label asp-for="DisplayOrder" class="form-label"></label>
+    <input asp-for="DisplayOrder" class="form-control" min="1" required>
+    <span asp-validation-for="DisplayOrder" class="text-danger"></span>
+</div>
+
+
+<div class="col-md-12 mt-3">
+    <label asp-for="CreatedDateTime" class="form-label"></label>
+    <input asp-for="CreatedDateTime" class="form-control" placeholder="Select Date Time " required>
+    <span asp-validation-for="CreatedDateTime" class="text-danger"></span>
+</div>
+
+
+
+
+
+
+@section  scripts{
+    <Partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,148 @@
+﻿@model CartViewModel
+@inject IUnitOfWork _unitOfWork
+@inject SignInManager<ApplicationUser> _signInManager
+
+@{
+    var productModel = _unitOfWork.ProductRepository.GetByIdAsync(Model.ProductId).Result;
+}
+
+
+
+<input type="hidden" asp-for="ApplicationUserId" value="@Model.ApplicationUserId">
+<input type="hidden" asp-for="ProductId" value="@Model.ProductId">
+<div class="row">
+
+    <div class="col-7">
+
+        <div class="container">
+            <h1 class="text-center my-5">Checkout</h1>
+            <div class="tab-content">
+
+
+
+                <div class="container container-fluid">
+                    <div class="row justify-content-center">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <div class="accordion" id="accordionExample">
+                                        <div class="card border-0">
+                                            <div class="card-header d-flex justify-content-between" id="headingOne">
+                                                <h2 class="mb-0">
+                                                    <button id="turnbf" class="btn btn-link d-flex turnaf clps" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                        <p class="clps-btn-style">Show the cart detail</p>
+                                                        <span class="mx-1"><i class="far fa-chevron-double-down"></i></span>
+                                                    </button>
+                                                </h2>
+                                                <span class="my-2 text-danger h4 " id=totalPrice>US $ 3600</span>
+                                            </div>
+                                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                                <div class="card-body p-0">
+
+                                                    <table class="table table-lg">
+                                                        <thead>
+                                                            <tr class="ms-3">
+
+                                                                <th>Product</th>
+                                                                <th> <label asp-for="Count"> choose Quantity</label></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+
+
+                                                            <tr class="justify-content-center ">
+
+
+
+                                                                <td style=" vertical-align: middle;">
+                                                                    <strong>@productModel.Name</strong>
+                                                                </td>
+
+                                                                <td style=" vertical-align: middle;">
+                                                                    <input asp-for="Count" type="number" class="form-control w-50 border-2 " min="1" max="100" id="Count" />
+                                                                    <input type="hidden" asp-for="@productModel.Price" id="itemPrice" />
+                                                                </td>
+
+
+
+                                                            </tr>
+
+
+
+
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+    <div class="col-4">
+        <img src="~/Files/Images/@productModel.ImageUrl" class="img rounded img-rounded" style=" max-height: 368px; max-width: 478px;  background-size: cover;margin-top:50px; padding-top:100px;" />
+    </div>
+
+</div>
+
+
+
+@section Scripts{
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js " integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo " crossorigin="anonymous "></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js " integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6 " crossorigin="anonymous "></script>
+
+
+
+
+    <script>
+        $(document).ready(function () {
+            // Function to update subtotal
+            function updateSubtotal() {
+                var price = parseFloat($('#itemPrice').val());
+                var quantity = parseInt($('#Count').val());
+                var subtotal = price * quantity;
+                $('#totalPrice').text(subtotal.toFixed(2));
+            }
+
+            totalPrice
+            // Call updateSubtotal on page load
+            updateSubtotal();
+
+            // Listen for changes in price selection
+            $('#itemPrice').change(function () {
+                // Update item price
+                var newPrice = $(this).val();
+                $('#itemPrice').text(newPrice);
+                // Call updateSubtotal to recalculate subtotal
+                updateSubtotal();
+            });
+
+            // Listen for changes in quantity
+            $('#Count').on('input', function () {
+                // Call updateSubtotal to recalculate subtotal
+                updateSubtotal();
+            });
+        });
+    </script>
+}
+
+
+

@@ -1,0 +1,56 @@
+﻿@model IEnumerable<ProductViewModel>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div style="position:fixed;right:25px;bottom:25px;"
+     class="text-white">
+    <a asp-action="Create" class="btn btn-outline-primary btn-lg">
+        <i class="fa-solid fa-plus"></i> Add New
+    </a>
+
+</div>
+
+@if (Model.Count() > 0)
+{
+
+    <table id="productTable" class="table table-hover mt-3">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor( product=> product.Name) </th>
+                <th>@Html.DisplayNameFor( product=> product.Description) </th>
+                <th>@Html.DisplayNameFor( product=> product.Price) </th>
+                <th>@Html.DisplayNameFor( product=> product.Category.Name) </th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var product in Model)
+            {
+
+                <tr class="table-primary">
+
+
+                    <td>@Html.DisplayFor(productItem => product.Name)</td>
+                    <td>@Html.DisplayFor(productItem => product.Description)</td>
+                    <td>@Html.DisplayFor(productItem => product.Price)</td>
+                    <td>@Html.DisplayFor(productItem => product.Category.Name)</td>
+
+                    <td>
+                        <partial name="_RUDbuttonsPartial" model="@product.Id" />
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-dismissible alert-primary mt-3">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <h4 class="alert-heading">Sorry !</h4>
+        <p class="mb-0">There is No Items To Display Sir </p>
+    </div>
+}

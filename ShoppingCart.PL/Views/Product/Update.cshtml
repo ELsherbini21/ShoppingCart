@@ -1,0 +1,38 @@
+﻿@model ProductViewModel
+
+
+
+<div class="form-body mt-3">
+    <div class="row">
+        <div class="form-holder col-7">
+            <div class="form-content">
+                <div class="form-items">
+                    <h3 class="mt-3 text-center">
+                        <span class="badge bg-primary"> @Model.Name</span>
+                    </h3>
+                    <form asp-action="Update" asp-route-id="@Model.Id" method="post" class="Create" enctype="multipart/form-data">
+                        <input type="hidden" asp-for="ImageUrl" value="@ViewData["ImageUrl"]" />
+
+                        <partial name="PartialViews/CreateUpdatePartial" model="@Model" />
+
+
+
+
+                        <div class="form-button mt-5">
+                            <a asp-action="Index" class="btn btn-info w-25">Cancel</a>
+                            <button id="submit" type="submit" class="btn btn-primary w-25">Update Data</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-4">
+            <img src="~/files/Images/@ViewData["ImageUrl"]" class="img img-fluid" style="margin-top:50px;" />
+        </div>
+    </div>
+</div>
+
+@section  scripts{
+    <Partial name="_ValidationScriptsPartial" />
+}

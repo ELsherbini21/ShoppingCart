@@ -1,0 +1,14 @@
+﻿@model int
+
+<a asp-action="Update" asp-route-id="@Model" class="btn btn-outline-warning mx-2">
+    <i class="fas fa-edit" title="Update"></i>
+</a>
+
+
+<a asp-action="Details" asp-route-id="@Model" class="btn btn-outline-info mx-2">
+    <i class="fas fa-info-circle" title="Details"></i>
+</a>
+
+<a asp-action="Delete" asp-route-id="@Model" class="btn btn-outline-danger mx-2 ">
+    <i class="fa fa-trash" title="Delete"></i>
+</a>

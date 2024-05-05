@@ -1,0 +1,267 @@
+﻿@model OrderHeaderViewModel
+
+@{
+    Layout = "_layout";
+}
+@{
+    Random rnd = new Random();
+
+
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>Complete Payment form</title>
+
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta name="description" content="A survey form used by a hotel to get the satisfaction level of visitors">
+
+    <meta name="author" content="Edward Mc Evoy 2019">
+
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+    <style>
+        .container {
+            margin-bottom: 5%;
+        }
+
+        #form-header {
+            margin-top: 5%;
+            text-align: center;
+        }
+
+        #form-tagline {
+            background: #ff6d00;
+            border-top-left-radius: 0.5rem;
+            border-bottom-left-radius: 0.5rem;
+            color: #ffffff;
+            margin-top: 5%;
+            padding: 4%;
+            text-align: left;
+        }
+
+            #form-tagline .fa {
+                margin-bottom: 15%;
+            }
+
+            #form-tagline h2 {
+                margin-bottom: 15%;
+            }
+
+        #form-content {
+            background: #f4f4f4;
+            border-top-right-radius: 0.5rem;
+            border-bottom-right-radius: 0.5rem;
+            margin-top: 5%;
+            padding: 3%;
+        }
+
+        .form-group {
+            margin-top: 5%;
+        }
+
+        .contact {
+            padding: 4%;
+            height: 400px;
+        }
+
+        .control-label {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        div .submit-button {
+            margin-top: 3%;
+            text-align: right;
+        }
+
+        .btnSubmit {
+            white-space: normal;
+            width: auto;
+            background: #ff6d00;
+            color: #ffffff;
+            font-weight: 600;
+            width: 25%;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- open container -->
+        <div class="row">
+            <!--  open row -->
+
+            <div id="form-header" class="col-12">
+                <h1 id="title">Complete Payment </h1>
+            </div>
+        </div> <!--  close row -->
+
+        <div class="row">
+            <!--  open row -->
+            <div id="form-tagline" class="col-md-4">
+                <div class="form-tagline">
+                    <i class="fa-solid fa-credit-card fa-5x"></i>
+                    <h2 class="">@Model.OrderTotal.ToString("c")</h2>
+
+
+
+
+
+                </div>
+            </div>
+
+            <div id="form-content" class="col-md-8">
+
+                <form asp-action="Summary" method="post">
+                    <input type="hidden" asp-for="ApplicationUserId" />
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <!-- Name -->
+                    <div class="row form-group">
+                        <div class="col-sm-3">
+                            <label asp-for="Name" class="control-label"></label>
+                        </div>
+
+                        <div class="input-group col-sm-9">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                            <br />
+                            <input asp-for="Name" class="form-control" placeholder="Please Enter Your Name" required>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <!-- Phone -->
+                    <div class="row form-group">
+                        <div class="col-sm-3">
+                            <label asp-for="Phone" class="control-label"></label>
+                        </div>
+
+                        <div class="input-group col-sm-9">
+                            <span asp-validation-for="Phone" class="text-danger"></span>
+                            <br />
+                            <input asp-for="Phone" class="form-control" placeholder="Please Enter Your Phone" required>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <!-- Address -->
+                    <div class="row form-group">
+                        <div class="col-sm-3">
+                            <label asp-for="Address" class="control-label"></label>
+                        </div>
+
+                        <div class="input-group col-sm-9">
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                            <br />
+                            <input asp-for="Address" class="form-control" placeholder="Please Enter Your Address">
+                        </div>
+                    </div>
+                    <hr>
+
+                    <!-- City -->
+                    <div class="row form-group">
+                        <div class="col-sm-3">
+                            <label asp-for="City" class="control-label"></label>
+                        </div>
+
+                        <div class="input-group col-sm-9">
+                            <span asp-validation-for="City" class="text-danger"></span>
+                            <br />
+                            <input asp-for="City" class="form-control" placeholder="Please Enter Your City">
+                        </div>
+                    </div>
+                    <hr>
+
+                    <!-- DateOfPayment -->
+                    <div class="row form-group">
+                        <div class="col-sm-3">
+                            <label asp-for="DateOfPayment" class="control-label"></label>
+                        </div>
+
+                        <div class="input-group col-sm-9">
+                            <span asp-validation-for="DateOfPayment" class="text-danger"></span>
+                            <br />
+                            <input asp-for="DateOfPayment" class="form-control" placeholder="Please Enter Your City">
+                        </div>
+                    </div>
+                    <hr>
+
+                    <!-- DueDate -->
+                    <div class="row form-group">
+                        <div class="col-sm-3">
+                            <label asp-for="DueDate" class="control-label"></label>
+                        </div>
+
+                        <div class="input-group col-sm-9">
+                            <span asp-validation-for="DueDate" class="text-danger"></span>
+                            <br />
+                            <input asp-for="DueDate" class="form-control" placeholder="Please Enter Your City">
+                        </div>
+                    </div>
+                    <hr>
+
+                    <!-- State -->
+                    <div class="row form-group">
+                        <div class="col-sm-3">
+                            <label asp-for="State" class="control-label"></label>
+                        </div>
+
+                        <div class="input-group col-sm-9">
+                            <span asp-validation-for="State" class="text-danger"></span>
+                            <br />
+                            <input asp-for="State" class="form-control" placeholder="Please Enter Your State">
+                        </div>
+                    </div>
+                    <hr>
+
+                    <!-- Postal Code -->
+                    <div class="row form-group">
+                        <div class="col-sm-3">
+                            <label asp-for="PostalCode" class="control-label"></label>
+                        </div>
+
+                        <div class="input-group col-sm-9">
+                            <span asp-validation-for="PostalCode" class="text-danger"></span>
+                            <br />
+                            <input asp-for="PostalCode" class="form-control" placeholder="Please Enter Your PostalCode">
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="form-group row justify-content-between">
+
+                        <div class="col-5  submit-button">
+                            <a asp-controller="Cart" asp-action="DisplayShoppingCartList" class="btnSubmit btn border-0 w-100 ">
+                                <i class="fa-solid fa-house"></i>
+                                Return To Shipping
+                            </a>
+                        </div>
+
+                        <div class="col-5  submit-button">
+
+                            <input  class="btnSubmit btn border-0 w-100" type="submit" value="Make Purchase " />
+                        </div>
+                    </div>
+
+                </form> <!-- close form -->
+
+            </div> <!-- close form content div -->
+        </div> <!-- close row -->
+    </div><!--  close container -->
+
+
+</body>
+</html>
+
+@section  scripts{
+    <Partial name="_ValidationScriptsPartial" />
+}

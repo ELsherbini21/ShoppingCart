@@ -1,0 +1,57 @@
+﻿@model ProductViewModel
+
+@inject IUnitOfWork _unitOfWork
+
+@{
+    SelectList CategorySelectList;
+    if (Model is null)
+    {
+        CategorySelectList = new SelectList(await _unitOfWork.CategoryRepository.GetAllAsync(), nameof(Category.Id), nameof(Category.Name));
+    }
+    else
+    {
+        CategorySelectList = new SelectList(await _unitOfWork.CategoryRepository.GetAllAsync(), nameof(Category.Id), nameof(Category.Name), Model.CategoryId);
+
+    }
+}
+
+
+<div class="col-md-12 mt-3">
+    <label asp-for="Name" class="form-label"></label>
+    <input asp-for="Name" class="form-control" placeholder="Enter Name" required>
+    <span asp-validation-for="Name" class="text-danger"></span>
+</div>
+
+<div class="col-md-12 mt-3">
+    <label asp-for="Description" class="form-label"></label>
+    <input asp-for="Description" class="form-control" required>
+    <span asp-validation-for="Description" class="text-danger"></span>
+</div>
+
+
+<div class="col-md-12 mt-3">
+    <label asp-for="Price" class="form-label"></label>
+    <input asp-for="Price" class="form-control" min="1" required>
+    <span asp-validation-for="Price" class="text-danger"></span>
+</div>
+
+
+<div class="col-md-12 mt-3">
+    <label asp-for="FormFile" class="form-label"></label>
+    <input asp-for="FormFile" class="form-control" >
+    <span asp-validation-for="FormFile" class="text-danger"></span>
+</div>
+
+<div class="col-md-12 mt-3">
+    <label asp-for="CategoryId" class="form-label"></label>
+    <select asp-for="CategoryId" asp-items="@CategorySelectList" class="form-select">
+
+        <option value="@null"> -- select Category -- </option>
+
+    </select>
+    <span asp-validation-for="FormFile" class="text-danger"></span>
+</div>
+
+@section  scripts{
+    <Partial name="_ValidationScriptsPartial" />
+}

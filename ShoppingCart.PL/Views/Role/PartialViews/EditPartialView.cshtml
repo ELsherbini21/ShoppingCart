@@ -1,0 +1,23 @@
+﻿@model IdentityRole
+@inject RoleManager<IdentityRole> _roleManager
+
+
+<form asp-action="Delete" asp-route-roleId="@Model">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="btn btn-outline-info close" data-bs-dismiss="modal">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+            <lable class="label-form"></lable>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-info" data-bs-dismiss="modal">Close</button>
+            <input type="submit" class="btn btn-danger" value="Complete Delete" />
+        </div>
+    </div>
+
+</form>
