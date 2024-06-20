@@ -42,14 +42,9 @@ namespace ShoppingCart.PL
             );
 
 
-            // External Login For Google 
-            builder.Services.AddAuthentication(
-            //o =>
-            //{
-            //    o.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 
-            //    o.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            //}
+            builder.Services.AddAuthentication(
+
             )
                 .AddCookie()
 
@@ -111,6 +106,8 @@ namespace ShoppingCart.PL
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
+          
 
             app.Run();
         }

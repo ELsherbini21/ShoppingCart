@@ -7,7 +7,7 @@ using ShoppingCart.PL.ViewModels;
 
 namespace ShoppingCart.PL.Controllers.Admin
 {
-    [Authorize("Admin")]
+    [Authorize]
     public class RoleController : Controller
     {
 

@@ -1,6 +1,5 @@
 ﻿@model IEnumerable<ProductViewModel>
-
-
+@inject SignInManager<ApplicationUser> _signInManager
 
 
 
@@ -38,13 +37,28 @@
                         <div class="col-md-12">
                             <div class="card-footer ">
                                 <p class="card-text">
-                                    <a class="btn btn-outline-primary float-end ">
+
+                                    @if (!_signInManager.IsSignedIn(User))
+                                    {
+                                       
+                                        <a asp-controller="Account" asp-action="SignIn" class="btn btn-success text-white " title="Sign In To buy this ">
+                                            <i class="bi bi-cart-plus"></i>
+                                            (Price @item.Price.ToString("c"))
+                                        </a>
+
+                                    }
+                                    else
+                                    {
+                                        <a asp-controller="Cart" asp-action="create" asp-route-productId="@item.Id" class="btn btn-success text-white " title="Add to Cart">
+                                            <i class="bi bi-cart-plus"></i>
+                                            (Price @item.Price.ToString("c"))
+                                        </a>
+                                    }
+
+                                    <a asp-controller="Product" asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary float-end ">
                                         <i class="bi bi-eye-fill" title="Show Details "> </i>
                                     </a>
-                                    <a asp-controller="Cart" asp-action="create" asp-route-productId="@item.Id" class="btn btn-success text-white " title="Add to Cart">
-                                        <i class="bi bi-cart-plus"></i>
-                                        (Price @item.Price.ToString("c"))
-                                    </a>
+
                                 </p>
                             </div>
                         </div>

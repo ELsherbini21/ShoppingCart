@@ -15,7 +15,7 @@ using Stripe.Identity;
 namespace ShoppingCart.PL.Controllers.Admin
 {
 
-    [Authorize("Admin")]
+    [Authorize]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

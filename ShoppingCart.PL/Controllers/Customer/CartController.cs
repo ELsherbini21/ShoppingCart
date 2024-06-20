@@ -10,10 +10,12 @@ using NuGet.Packaging.Core;
 using NuGet.Protocol;
 using ShoppingCart.BLL.Interfaces;
 using ShoppingCart.DAL.Models;
+using ShoppingCart.PL.Controllers.Admin;
 using ShoppingCart.PL.Helpers.Enums;
 using ShoppingCart.PL.ViewModels;
 using Stripe;
 using Stripe.BillingPortal;
+using System.Reflection;
 using System.Security.Claims;
 
 namespace ShoppingCart.PL.Controllers.Customer
@@ -222,6 +224,9 @@ namespace ShoppingCart.PL.Controllers.Customer
         #region Create
         public async Task<IActionResult> Create(int? productId)
         {
+            if (!_signInManager.IsSignedIn(User))
+                return RedirectToAction(nameof(ErrorController.LogInError), "Error");
+
             var appUser = await _userManager.GetUserAsync(User);
 
             if (appUser is not null && productId is not null)
@@ -290,14 +295,14 @@ namespace ShoppingCart.PL.Controllers.Customer
 
         #region Delete
 
-   
+
 
         //[HttpPost]
         public async Task<IActionResult> Delete(int? id)
         {
             var Model = await _unitOfWork.CartRepository.GetByIdAsync(id.Value);
 
-            var viewModel = _mapper.Map<Cart, CartViewModel> (Model);
+            var viewModel = _mapper.Map<Cart, CartViewModel>(Model);
 
             return await LogicForUpdateAndDeletePost(id, viewModel, () => _unitOfWork.CartRepository.Delete(Model), nameof(Index));
         }

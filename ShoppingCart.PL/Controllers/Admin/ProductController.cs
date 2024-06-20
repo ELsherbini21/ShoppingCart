@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace ShoppingCart.PL.Controllers.Admin
 {
-    [Authorize("Admin")]
+    [Authorize]
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -99,6 +99,7 @@ namespace ShoppingCart.PL.Controllers.Admin
 
 
         #region Details
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id) => await LogicForRUDOperations(id, nameof(Details));
 
         #endregion
@@ -111,7 +112,7 @@ namespace ShoppingCart.PL.Controllers.Admin
         public async Task<IActionResult> Delete([FromRoute] int? id, ProductViewModel viewModel)
         {
             var Model = _mapper.Map<ProductViewModel, Product>(viewModel);
-            
+
             return await LogicForUpdateAndDeletePost(id, viewModel, () => _unitOfWork.ProductRepository.Delete(Model), nameof(Update));
         }
 

@@ -45,8 +45,12 @@ namespace ShoppingCart.PL.Controllers.Customer
 
         #region Sign In 
 
+        [HttpGet]
         public async Task<IActionResult> SignIn(string? ReturnUrl = null)
         {
+            if (ReturnUrl == null)
+                return View(new SignInViewModel());
+
             var model = new SignInViewModel
             {
                 ReturnUrl = ReturnUrl,
